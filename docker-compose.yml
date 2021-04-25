@@ -5,31 +5,46 @@ services:
     container_name: apigateway
     ports:
       - 8081:8081
+    depends_on:
+      - database
   atendees:
     image: atendees:v1
-    container_name: "atendees"
+    container_name: atendees
     ports:
       - 8082:8082
     depends_on:
       - apigateway
+      - database
   matches:
     image: matches:v1
-    container_name: "matches"
+    container_name: matches
     ports:
       - 8083:8083
     depends_on:
       - apigateway
+      - database
   orders:
     image: orders:v1
-    container_name: "orders"
+    container_name: orders
     ports:
       - 8084:8084
     depends_on:
       - apigateway
+      - database
   payments:
     image: payments:v1
-    container_name: "payments"
+    container_name: payments
     ports:
       - 8085:8085
     depends_on:
       - apigateway
+      - database
+  database:
+    container_name: mysql
+    image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_USER: user
+      MYSQL_DATABASE: uefodb
+    ports:
+      - 3306:3306
