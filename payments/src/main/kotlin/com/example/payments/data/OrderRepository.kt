@@ -1,8 +1,7 @@
-package com.example.atendees.data
+package com.example.payments.data
 
-import Atendee
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
 
 @Repository
-interface AtendeeRepository : JpaRepository<Atendee, Long>
+interface OrderRepository : JpaRepository<Order, Long>

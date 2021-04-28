@@ -1,8 +1,7 @@
-package com.example.atendees.data
+package com.example.matches.data;
 
-import Atendee
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
 
 @Repository
-interface AtendeeRepository : JpaRepository<Atendee, Long>
+interface MatchRepository : JpaRepository<Match, Long>

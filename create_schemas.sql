@@ -9,12 +9,6 @@ create schema IF NOT EXISTS payments;
 /*
  Api Gateway
 */
-create table if not exists atendee (
-    id BIGINT,
-    pesel VARCHAR(11),
-    start_date  DATE,
-    end_date DATE);
-
 
 /*
  Attendees
@@ -31,7 +25,7 @@ create table if not exists atendee (
 
 
 /*
-Orders
+ Orders
 */
 
 /*
