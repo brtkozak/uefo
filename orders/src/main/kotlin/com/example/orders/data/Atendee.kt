@@ -3,8 +3,9 @@ import javax.persistence.GeneratedValue
 import javax.persistence.Id
 
 @Entity
-class Atendee(
-        var pesel: String,
-        var name: String,
-        var surname: String,
-        @Id @GeneratedValue var id: Long? = null)
+data class Atendee(
+    var pesel: String,
+    var name: String,
+    var surname: String,
+    @Id @GeneratedValue var id: Long? = null
+)

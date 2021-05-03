@@ -1,10 +1,14 @@
 package com.example.payments.data
 
 import java.util.*
+import javax.persistence.Entity
 import javax.persistence.GeneratedValue
 import javax.persistence.Id
+import javax.persistence.Table
 
-class Order (
+@Entity
+@Table
+data class Order(
     var extOrderId: Long,
     var orderCreateDate: Date,
     var notifyUrl: String,
@@ -13,9 +17,9 @@ class Order (
     var description: String,
     var currencyCode: String,
     var totalAmount: Number,
-    var buyer: Buyer,
+    var buyer: String,
     var payMethod: String,
-    var products: List<Product>,
+    var products: String,
     var status: String,
     @Id
     @GeneratedValue

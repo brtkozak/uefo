@@ -39,7 +39,3 @@ tasks.withType<KotlinCompile> {
 tasks.withType<Test> {
     useJUnitPlatform()
 }
-
-springBoot{
-    mainClassName="com.example.matches.MatchesApplication.kt"
-}
