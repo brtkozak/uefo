@@ -1,7 +1,7 @@
-package com.example.orders.data
+package com.example.payments
 
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
 
 @Repository
-interface SeatRepository : JpaRepository<Seat, Long>
+interface OrderRepository : JpaRepository<Order, Long>

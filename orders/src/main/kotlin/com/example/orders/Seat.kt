@@ -1,12 +1,10 @@
-package com.example.orders.data
+package com.example.orders
 
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
 import javax.persistence.Id
-import javax.persistence.Table
 
 @Entity
-@Table
 data class Seat(
     var sector: String,
     var seatNumber: Number,

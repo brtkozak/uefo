@@ -1,7 +1,7 @@
-package com.example.matches.data;
+package com.example.payments
 
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
 
 @Repository
-interface TeamRepository : JpaRepository<Team, Long>
+interface BuyerRepository : JpaRepository<Buyer, Long>

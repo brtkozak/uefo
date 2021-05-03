@@ -1,12 +1,10 @@
-package com.example.matches.data
+package com.example.matches
 
 import java.util.*
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
 import javax.persistence.Id
-import javax.persistence.Table
 
-@Table
 @Entity
 data class Match(
     var name: String,

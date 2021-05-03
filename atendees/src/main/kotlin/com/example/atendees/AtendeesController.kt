@@ -1,18 +1,13 @@
 package com.example.atendees
 
-import Atendee
-import com.example.atendees.data.AtendeeRepository
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.*
 import java.util.*
 
 
 @RestController
 @RequestMapping("/atendees")
-class AtendeesController() {
+class AtendeesController(private val atendeeRepo: AtendeeRepository) {
 
-    @Autowired
-    lateinit var atendeeRepo: AtendeeRepository
 
     @GetMapping("/test")
     fun getTest() : String {

@@ -1,7 +1,7 @@
-package com.example.orders.data
+package com.example.matches;
 
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
 
 @Repository
-interface OrderRepository : JpaRepository<Order, Long>
+interface TeamRepository : JpaRepository<Team, Long>
