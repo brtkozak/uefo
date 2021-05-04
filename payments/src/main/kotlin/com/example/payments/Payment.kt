@@ -7,7 +7,6 @@ import javax.persistence.Table
 
 
 @Entity
-@Table
 data class Payment(
     var name: String,
     var orderId: Long,

@@ -6,7 +6,6 @@ import javax.persistence.Id
 import javax.persistence.Table
 
 @Entity
-@Table
 data class Product(
     var name: String,
     var unitPrice: Number,

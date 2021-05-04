@@ -7,7 +7,6 @@ import javax.persistence.Table
 
 
 @Entity
-@Table
 data class Ticket(
     var name: String,
     var unitPrice: Number,

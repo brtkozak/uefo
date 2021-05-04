@@ -7,7 +7,6 @@ import javax.persistence.Id
 import javax.persistence.Table
 
 @Entity
-@Table
 data class Order(
     var extOrderId: Long,
     var orderCreateDate: Date,

@@ -30,4 +30,9 @@ class AtendeesController(private val atendeeRepo: AtendeeRepository) {
     fun getAll(): List<Atendee>{
         return atendeeRepo.findAll()
     }
+
+    @DeleteMapping("/{id}")
+    fun deleteAtendee(@PathVariable id: Long){
+        atendeeRepo.deleteById(id)
+    }
 }

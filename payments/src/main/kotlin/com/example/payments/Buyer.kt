@@ -6,7 +6,6 @@ import javax.persistence.Id
 import javax.persistence.Table
 
 @Entity
-@Table
 data class Buyer(
     var email: String,
     var phone: String,

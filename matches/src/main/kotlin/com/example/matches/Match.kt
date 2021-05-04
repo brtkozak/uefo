@@ -1,9 +1,7 @@
 package com.example.matches
 
 import java.util.*
-import javax.persistence.Entity
-import javax.persistence.GeneratedValue
-import javax.persistence.Id
+import javax.persistence.*
 
 @Entity
 data class Match(
@@ -11,7 +9,7 @@ data class Match(
     var allAvailableSeats: String,
     var beginDate: Date,
     var durationTime: Number,
-    var teamOne: String,
-    var teamTwo: String,
+    var teamOne: Team,
+    var teamTwo: Team,
     @Id @GeneratedValue var id: Long? = null
 )
