@@ -9,7 +9,7 @@ data class Match(
     var allAvailableSeats: String,
     var beginDate: Date,
     var durationTime: Number,
-    var teamOne: Team,
-    var teamTwo: Team,
+    var teamOne: String,
+    var teamTwo: String,
     @Id @GeneratedValue var id: Long? = null
 )

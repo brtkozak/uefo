@@ -7,7 +7,7 @@ import javax.persistence.Id
 import javax.persistence.Table
 
 @Entity
-data class Order(
+data class PaymentOrder(
     var extOrderId: Long,
     var orderCreateDate: Date,
     var notifyUrl: String,

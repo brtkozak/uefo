@@ -1,13 +1,14 @@
-package com.example.orders
+package com.example.payments
 
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
 import javax.persistence.Id
+import javax.persistence.Table
 
 @Entity
-data class Atendee(
-    var pesel: String,
+data class PaymentProduct(
     var name: String,
-    var surname: String,
+    var unitPrice: Number,
+    var quantity: Number,
     @Id @GeneratedValue var id: Long? = null
 )
