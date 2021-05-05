@@ -1,0 +1,22 @@
+POST http://localhost:8085/payments/payment
+
+{
+    "currencyCode": "PLN",
+    "customerId": 1,
+    "orderId": 1,
+    "name": "test order",
+    "tickets": [
+        {
+            "name": "test ticket 1",
+            "unitPrice": 100.0,
+            "quantity": 1
+        },
+        {
+            "name": "test ticket 2",
+            "unitPrice": 200.0,
+            "quantity": 2
+        }
+    ]
+}
+
+http://localhost:8085/payments/1
