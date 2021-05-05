@@ -2,7 +2,7 @@ package com.example.orders.dto
 
 import com.example.orders.Ticket
 
-class OrderDetailsDto (
+data class OrderDetailsDto (
     val id: Long,
     val userId: Long,
     val matchId: Long,
