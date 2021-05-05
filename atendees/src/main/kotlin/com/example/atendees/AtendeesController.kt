@@ -10,7 +10,7 @@ class AtendeesController(private val atendeeRepo: AtendeeRepository) {
 
 
     @GetMapping("/test")
-    fun getTest() : String {
+    fun getTest(): String {
         return "atendees"
     }
 
@@ -21,18 +21,17 @@ class AtendeesController(private val atendeeRepo: AtendeeRepository) {
     }
 
     @PostMapping("/save")
-    fun save(@RequestBody atendee: Atendee): String {
-        atendeeRepo.save(atendee)
-        return "Successfully saved an attendee"
+    fun save(@RequestBody atendee: Atendee): Atendee {
+        return atendeeRepo.save(atendee)
     }
 
     @GetMapping("/all")
-    fun getAll(): List<Atendee>{
+    fun getAll(): List<Atendee> {
         return atendeeRepo.findAll()
     }
 
     @DeleteMapping("/{id}")
-    fun deleteAtendee(@PathVariable id: Long){
+    fun deleteAtendee(@PathVariable id: Long) {
         atendeeRepo.deleteById(id)
     }
 }
