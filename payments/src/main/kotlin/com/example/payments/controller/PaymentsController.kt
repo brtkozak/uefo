@@ -1,8 +1,8 @@
 package com.example.payments.controller
 
 import com.example.payments.dto.CreatePaymentDto
-import com.example.payments.dto.Notification
-import com.example.payments.dto.Payment
+import com.example.payments.entity.Notification
+import com.example.payments.entity.Payment
 import com.example.payments.repository.PaymentRepository
 import com.example.payments.repository.NotificationRepository
 import org.springframework.web.bind.annotation.*
@@ -11,18 +11,17 @@ import java.util.*
 @RestController
 @RequestMapping("/payments")
 class PaymentsController(
-    private val paymentRepository: PaymentRepository,
-    private val notificationRepository: NotificationRepository
+    private val paymentRepository: PaymentRepository
 ) {
-
-    @GetMapping("/test")
-    fun getTest(): String {
-        return "payments"
-    }
 
     @GetMapping("/{id}")
     fun getPayment(@PathVariable id: Long): Optional<Payment> {
         return paymentRepository.findById(id)
+    }
+
+    @DeleteMapping("/{id}")
+    fun deletePayment(@PathVariable id : Long) {
+        paymentRepository.deleteById(id)
     }
 
     @PostMapping("/payment")
@@ -37,12 +36,6 @@ class PaymentsController(
             )
         )
         return "Payment has been created"
-    }
-
-    @PostMapping("/notification")
-    fun notification(notification: Notification) : String {
-        notificationRepository.save(notification)
-        return "Notification has been received"
     }
 
 }

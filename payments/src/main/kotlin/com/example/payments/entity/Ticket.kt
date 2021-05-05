@@ -1,10 +1,9 @@
-package com.example.payments.dto
+package com.example.payments.entity
 
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
 import javax.persistence.Id
 import javax.persistence.Table
-
 
 @Entity
 data class Ticket(
