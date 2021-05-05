@@ -1,25 +1,20 @@
 package com.example.orders
 
-import java.util.*
-import javax.persistence.Entity
-import javax.persistence.GeneratedValue
-import javax.persistence.Id
+import javax.persistence.*
 
 @Entity
 data class Order (
-    var extOrderId: Long,
-    var orderCreateDate: Date,
-    var notifyUrl: String,
-    var customerId: Long,
-    var merchantPosId: Long,
-    var description: String,
-    var currencyCode: String,
-    var totalAmount: Number,
-    var buyer: String,
-    var payMethod: String,
-    var products: String,
-    var status: String,
+    var userId: Long,
+    var matchId: Long,
+) {
     @Id
     @GeneratedValue
     var id: Long? = null
-)
+
+    @OneToMany(
+        mappedBy = "order",
+        cascade = [CascadeType.ALL],
+        orphanRemoval = true
+    )
+    lateinit var tickets: MutableList<Ticket>
+}
