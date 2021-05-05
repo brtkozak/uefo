@@ -1,0 +1,58 @@
+Matches:
+//test
+GET - http://localhost:8083/matches/test
+
+//dodaje nowy
+POST -  http://localhost:8083/matches/save
+{
+    "name": "Fajny mecz",
+    "allAvailableSeats": 100,
+    "beginDate": "2021-05-05T18:00:00.000+00:00",
+    "durationTime": 100,
+    "teamOne":
+    {
+        "id": 1,
+        "name": "Drużyna pierścienia"
+    },
+    "teamTwo":
+    {
+        "id": 2,
+        "name": "Armia Sarumana"
+    }
+}
+
+//pobiera wszystkie mecze
+GET -  http://localhost:8083/matches/all
+
+//pobiera po id
+GET -  http://localhost:8083/matches/1
+
+//usuwa po id
+DELETE -  http://localhost:8083/matches/1
+
+Teams:
+//test
+GET - http://localhost:8083/teams/test
+
+//nowa druzyna
+POST - http://localhost:8083/teams/save
+
+{
+    "name": "Drużyna pierścienia"
+}
+{
+    "name": "Armia Sarumana"
+}
+{
+    "name": "Słudzy Saurona"
+}
+
+//pobiera wszystkie druzyny
+GET - http://localhost:8083/teams/all
+
+//pobiera zespol po id
+GET - http://localhost:8083/teams/1
+
+//usuwa po id
+DELETE - http://localhost:8083/teams/3
+
