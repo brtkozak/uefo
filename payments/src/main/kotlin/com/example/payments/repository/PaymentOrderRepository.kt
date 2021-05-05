@@ -1,5 +1,6 @@
-package com.example.payments
+package com.example.payments.repository
 
+import com.example.payments.dto.PaymentOrder
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
 

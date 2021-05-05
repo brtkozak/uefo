@@ -1,17 +1,14 @@
-package com.example.payments
+package com.example.payments.dto
 
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
 import javax.persistence.Id
 import javax.persistence.Table
 
-
 @Entity
-data class Payment(
+data class PaymentProduct(
     var name: String,
-    var orderId: Long,
-    var customerId: Long,
-    var currencyCode: String,
-    var tickets: String, //todo: define the relationship
+    var unitPrice: Number,
+    var quantity: Number,
     @Id @GeneratedValue var id: Long? = null
 )

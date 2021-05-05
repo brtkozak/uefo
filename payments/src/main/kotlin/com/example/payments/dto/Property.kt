@@ -1,4 +1,4 @@
-package com.example.payments
+package com.example.payments.dto
 
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
@@ -10,6 +10,6 @@ data class Property (
     @Id
     @GeneratedValue
     var id: Long? = null,
-
-    var name: String
+    var name: String,
+    var value: String
 )

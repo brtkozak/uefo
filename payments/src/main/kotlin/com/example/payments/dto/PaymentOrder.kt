@@ -1,4 +1,4 @@
-package com.example.payments
+package com.example.payments.dto
 
 import java.util.*
 import javax.persistence.Entity

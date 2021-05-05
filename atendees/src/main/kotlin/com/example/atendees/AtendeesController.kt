@@ -8,12 +8,10 @@ import java.util.*
 @RequestMapping("/atendees")
 class AtendeesController(private val atendeeRepo: AtendeeRepository) {
 
-
     @GetMapping("/test")
     fun getTest(): String {
         return "atendees"
     }
-
 
     @GetMapping("/{id}")
     fun getAtendee(@PathVariable id: Long): Optional<Atendee> {
