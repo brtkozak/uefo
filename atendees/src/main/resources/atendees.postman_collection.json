@@ -1,0 +1,63 @@
+{
+	"info": {
+		"_postman_id": "86b202ef-87b0-4cbb-93f2-cdc5b5de7866",
+		"name": "atendees",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "all",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8082/atendees/all"
+			},
+			"response": []
+		},
+		{
+			"name": "save",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n \"pesel\": \"fancy-pesel\",\r\n \"startDate\": \"2021-06-05\",\r\n \"endDate\": \"2021-06-05\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8082/atendees/save"
+			},
+			"response": []
+		},
+		{
+			"name": "test",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8082/atendees/test"
+			},
+			"response": []
+		},
+		{
+			"name": "getById",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": null
+			},
+			"response": []
+		},
+		{
+			"name": "delete atendee",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": null
+			},
+			"response": []
+		}
+	]
+}
