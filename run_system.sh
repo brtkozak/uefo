@@ -2,9 +2,9 @@
 
 yes | docker image prune
 
-cd apigateway || exit
+cd gateway || exit
 ./gradlew clean assemble -Dorg.gradle.java.home="$1"
-docker build -f Dockerfile -t apigateway:v1 .
+docker build -f Dockerfile -t gateway:v1 .
 cd ..
 
 cd atendees || exit

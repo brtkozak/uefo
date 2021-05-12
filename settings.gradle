@@ -1,6 +1,6 @@
 rootProject.name = 'uefo'
 include(':notifications')
-include(':apigateway')
+include(':gateway')
 include(':atendees')
 include(':matches')
 include(':orders')
