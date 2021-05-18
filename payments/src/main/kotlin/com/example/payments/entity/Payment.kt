@@ -1,10 +1,9 @@
 package com.example.payments.entity
 
-import com.example.payments.dto.CreatePaymentDto
+import com.example.payments.dto.CreatePaymentRequest
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
 import javax.persistence.Id
-import javax.persistence.Table
 
 @Entity
 data class Payment(
@@ -16,12 +15,12 @@ data class Payment(
 ) {
 
     companion object {
-        fun buildFromCreatePaymentDto(createPaymentDto: CreatePaymentDto): Payment {
+        fun buildFromCreatePaymentDto(createPaymentRequest: CreatePaymentRequest): Payment {
             return  Payment(
-                name = createPaymentDto.name,
-                orderId = createPaymentDto.orderId,
-                customerId = createPaymentDto.customerId,
-                currencyCode = createPaymentDto.currencyCode
+                name = createPaymentRequest.name,
+                orderId = createPaymentRequest.orderId,
+                customerId = createPaymentRequest.customerId,
+                currencyCode = createPaymentRequest.currencyCode
             )
         }
     }

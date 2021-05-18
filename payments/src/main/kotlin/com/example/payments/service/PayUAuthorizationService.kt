@@ -15,13 +15,13 @@ import reactor.core.publisher.Mono
 @Service
 class PayUAuthorizationService {
 
-    private val clientId = "145227"
-    private val clientSecret = "12f071174cb7eb79d4aac5bc2f07563f"
+    private val clientId = "406445"
+    private val clientSecret = "3a57f71a4c579fed6c496b2fca38042e"
     private val grantType = "client_credentials"
     private val oauthToken: String? = null
 
     private val webClient: WebClient = WebClient.builder()
-        .baseUrl("https://secure.payu.com/pl/standard/user/oauth/authorize")
+        .baseUrl("https://secure.snd.payu.com/pl/standard/user/oauth/authorize")
         .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_FORM_URLENCODED_VALUE)
         .build()
 
