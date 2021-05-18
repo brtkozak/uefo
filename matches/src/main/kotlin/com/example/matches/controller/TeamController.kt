@@ -1,5 +1,7 @@
-package com.example.matches
+package com.example.matches.controller
 
+import com.example.matches.entity.Team
+import com.example.matches.repository.TeamRepository
 import org.springframework.web.bind.annotation.*
 import java.util.*
 
