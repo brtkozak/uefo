@@ -1,12 +1,13 @@
-package com.example.matches
+package com.example.matches.entity
 
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
 import javax.persistence.Id
 
-
 @Entity
 data class Team(
-    var name: String,
-    @Id @GeneratedValue var id: Long? = null
+    @Id
+    @GeneratedValue
+    var id: Long? = null,
+    var name: String
 )
