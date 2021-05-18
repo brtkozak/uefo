@@ -24,9 +24,14 @@ class AvailableSeatsService(
         .build()
 
     fun getAvailableSeatsForMatch(matchId: Long): AvailableSeatsDto? {
-        val match = getMatchById(matchId)
+        val match = getMatchById(matchId) ?: return null
         val ordersForMatch = orderRepository.getAllByMatchId(matchId)
-        //TODO filter out free seats; cannot do it because matches does not return seats
+        val availableSeats = match.allAvailableSeats.filter { availableSeatCandidate ->
+            ordersForMatch.any { order ->
+                order.tickets.any { ticket ->
+                    ticket.seatId == availableSeatCandidate.id } }
+        }
+        return AvailableSeatsDto(matchId, availableSeats)
     }
 
     fun getMatchById(matchId: Long): MatchDto? {
