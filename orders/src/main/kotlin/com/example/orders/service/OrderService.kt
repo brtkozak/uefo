@@ -73,6 +73,7 @@ class OrderService(
         return try {
             newOrderService.requestOrderPayment(infoForPayment)
         } catch (e: Exception) {
+            e.printStackTrace()
             println("Cannot realize payment. Rollback order.")
             null
         }

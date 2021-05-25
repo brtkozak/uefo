@@ -38,7 +38,7 @@ class NewOrderService {
             .exchange()
             .block()
         if (response?.statusCode() != HttpStatus.OK) {
-            throw Exception()
+            throw Exception("Payment HTTP response != 400, but ${response?.statusCode()}")
         }
         return response.bodyToMono(CreatePaymentResponse::class.java).block()
     }
