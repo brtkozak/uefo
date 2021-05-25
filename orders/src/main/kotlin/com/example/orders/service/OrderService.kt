@@ -5,43 +5,53 @@ import com.example.orders.OrderRepository
 import com.example.orders.Ticket
 import com.example.orders.TicketRepository
 import com.example.orders.dto.NewOrderDto
+import com.example.orders.dto.NewOrderFormDataDto
 import com.example.orders.dto.OrderDetailsDto
+import com.example.orders.dto.payment.CreatePaymentRequest
+import com.example.orders.dto.payment.CreatePaymentResponse
+import com.example.orders.dto.payment.TicketForPaymentDto
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 
 @Service
 class OrderService(
     val newOrderService: NewOrderService,
+    val availableSeatsService: AvailableSeatsService,
     val ticketRepository: TicketRepository,
-    val orderRepository: OrderRepository
+    val orderRepository: OrderRepository,
 ) {
-    fun createNewOrder(newOrderDto: NewOrderDto): Order? {
-        var orderEntity: Order? = null
-        try {
-            orderEntity = saveOrder(newOrderDto)
-            newOrderService.requestOrderPayment()
-        } catch (e: Exception) {
-            rollbackOrder(orderEntity)
+    fun createNewOrder(newOrderFormDataDto: NewOrderFormDataDto): NewOrderDto? {
+        val restrictedAtendees = newOrderService.checkAtendeesRestrictions(newOrderFormDataDto.tickets)
+        if(restrictedAtendees.isNotEmpty()) {
+            throw IllegalArgumentException("Users with restrictions: " + restrictedAtendees.joinToString())
         }
 
-        return orderEntity
+        var orderEntityId: Long? = null
+        return try {
+            val savedOrder = saveOrder(newOrderFormDataDto)
+            orderEntityId = savedOrder.id
+            val paymentReq = preparePayment(savedOrder) ?: throw Exception("Cannot realize payment.")
+            NewOrderDto(savedOrder, paymentReq)
+        } catch (e: Exception) {
+            rollbackOrder(orderEntityId)
+            throw e
+        }
     }
 
-    fun saveOrder(newOrderDto: NewOrderDto): Order {
-        val orderEntity = Order(newOrderDto.userId, newOrderDto.matchId)
+    fun saveOrder(newOrderFormDataDto: NewOrderFormDataDto): Order {
+        val orderEntity = Order(newOrderFormDataDto.userId, newOrderFormDataDto.matchId)
         orderRepository.save(orderEntity)
-        val tickets = newOrderDto.tickets.map {
-            val ticketEntity = Ticket(it.atendeeId, it.seatId, orderEntity)
+        val tickets = newOrderFormDataDto.tickets.map {
+            val ticketEntity = Ticket(it.atendee.id, it.seatId, orderEntity)
             ticketRepository.save(ticketEntity)
         }
         orderEntity.tickets = tickets.toMutableList()
         return orderEntity
     }
 
-    fun rollbackOrder(orderToRollback: Order?) {
-        val orderId = orderToRollback?.id
-        if(orderId != null) {
-            orderRepository.deleteById(orderId)
+    fun rollbackOrder(orderIdToRollback: Long?) {
+        if(orderIdToRollback != null) {
+            orderRepository.deleteById(orderIdToRollback)
         }
     }
 
@@ -49,5 +59,25 @@ class OrderService(
         val savedEntity = orderRepository.findByIdOrNull(orderId) ?: return null
         val savedEntityId = savedEntity.id ?: return null
         return OrderDetailsDto(savedEntityId, savedEntity.userId, savedEntity.matchId, savedEntity.tickets)
+    }
+
+    fun preparePayment(savedOrder: Order): CreatePaymentResponse? {
+        //TODO temp
+        val customerId = 123L
+        val currency = "PL"
+
+        val orderName = "Order_${savedOrder.id}"
+        val tickets = getTicketsForPayment(savedOrder)
+        val infoForPayment = CreatePaymentRequest(orderName, savedOrder.id!!, customerId, currency, tickets)
+        return newOrderService.requestOrderPayment(infoForPayment)
+    }
+
+    fun getTicketsForPayment(savedOrder: Order): List<TicketForPaymentDto> {
+        return savedOrder.tickets
+            .mapNotNull { availableSeatsService.getSeatDetails(it.seatId) }
+            .map {
+                val ticketName = "ticket_" + it.id
+                TicketForPaymentDto(ticketName, it.seatPrice, 1, it.id)
+            }
     }
 }

@@ -3,6 +3,7 @@ package com.example.orders.service
 import com.example.orders.OrderRepository
 import com.example.orders.dto.AvailableSeatsDto
 import com.example.orders.dto.MatchDto
+import com.example.orders.dto.TicketSeatDto
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
@@ -45,5 +46,18 @@ class AvailableSeatsService(
             throw Exception()
         }
         return response.bodyToMono(MatchDto::class.java).block()
+    }
+
+    fun getSeatDetails(seatId: Long): TicketSeatDto? {
+        val request = matchesWebClient
+            .get()
+            .uri("/seats/${seatId}")
+        val response = request
+            .exchange()
+            .block()
+        if (response?.statusCode() != HttpStatus.OK) {
+            throw Exception()
+        }
+        return response.bodyToMono(TicketSeatDto::class.java).block()
     }
 }
