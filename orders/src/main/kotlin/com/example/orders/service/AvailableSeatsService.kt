@@ -16,7 +16,7 @@ class AvailableSeatsService(
     private val orderRepository: OrderRepository
 ) {
     companion object {
-        const val MATCHES_SERVER_URL = "localhost:8083"
+        const val MATCHES_SERVER_URL = "http://matches:8083"
     }
 
     private val matchesWebClient: WebClient = WebClient.builder()

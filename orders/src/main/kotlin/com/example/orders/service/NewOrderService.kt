@@ -13,11 +13,10 @@ import org.springframework.web.reactive.function.client.WebClient
 import java.time.LocalDate
 
 @Service
-public class NewOrderService {
+class NewOrderService {
     companion object {
-        const val PAYMENTS_SERVER_URL = "localhost:8085"
-        const val ATENDEES_SERVER_URL = "localhost:8082"
-        const val MATCHES_SERVER_URL = "localhost:8082"
+        const val PAYMENTS_SERVER_URL = "http://payments:8085"
+        const val ATENDEES_SERVER_URL = "http://atendees:8082"
     }
 
     private val paymentsWebClient: WebClient = WebClient.builder()
@@ -33,7 +32,7 @@ public class NewOrderService {
     fun requestOrderPayment(paymentBody: CreatePaymentRequest): CreatePaymentResponse? {
         val request = paymentsWebClient
             .post()
-            .uri("/payment")
+            .uri("/payments/payment")
             .body(BodyInserters.fromValue(paymentBody))
         val response = request
             .exchange()
@@ -45,6 +44,8 @@ public class NewOrderService {
     }
 
     fun checkAtendeesRestrictions(tickets: List<NewTicketDto>): List<String> {
+        println("checkAtendeesRestrictions")
+
         val now = LocalDate.now()
 
         return tickets
@@ -56,7 +57,7 @@ public class NewOrderService {
     private fun getAtendeeRestriction(atendeePesel: String): AtendeeRestrictionDto? {
         val request = atendeesWebClient
             .get()
-            .uri("/atendees/${atendeePesel}")
+            .uri("/atendees/byPesel/${atendeePesel}")
         val response = request
             .exchange()
             .block()

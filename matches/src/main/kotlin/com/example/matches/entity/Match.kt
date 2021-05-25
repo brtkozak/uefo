@@ -1,5 +1,7 @@
 package com.example.matches.entity
 
+import org.hibernate.annotations.OnDelete
+import org.hibernate.annotations.OnDeleteAction
 import java.time.LocalDate
 import javax.persistence.*
 
@@ -14,7 +16,9 @@ data class Match(
     var beginDate: LocalDate,
     var durationTime: Int,
     @ManyToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
     var teamOne: Team,
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @ManyToOne
     var teamTwo: Team,
 )

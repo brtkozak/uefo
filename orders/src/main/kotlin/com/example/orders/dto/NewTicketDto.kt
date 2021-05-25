@@ -8,6 +8,5 @@ data class NewTicketDto (
 data class Atendee (
     val name: String,
     val surname: String,
-    val pesel: String,
-    val id: Long
+    val pesel: String
 )

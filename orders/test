@@ -1,10 +1,13 @@
 POST http://localhost:8084/orders/order
 {
   "userId": 17,
-	"matchId": 18,
+	"matchId": 4,
 	"tickets": [
-		{"atendeeId": 13, "seatId": 14}
+		{"atendee": {
+			"name": "Adam",
+			"surname": "Robak",
+			"pesel": "90050410106"
+		},
+		"seatId": 7}
 	]
 }
-
-GET http://localhost:8084/orders/order/1

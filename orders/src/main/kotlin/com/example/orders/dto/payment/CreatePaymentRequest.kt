@@ -12,5 +12,5 @@ data class TicketForPaymentDto (
     val name: String,
     val unitPrice: Number,
     val quantity: Number,
-    val id: Long? = null
+    val id: Long
 )

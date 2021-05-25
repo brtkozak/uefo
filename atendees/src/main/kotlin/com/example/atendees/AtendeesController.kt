@@ -8,11 +8,6 @@ import java.util.*
 @RequestMapping("/atendees")
 class AtendeesController(private val atendeeRepo: AtendeeRepository) {
 
-    @GetMapping("/test")
-    fun getTest(): String {
-        return "atendees"
-    }
-
     @GetMapping("/byPesel/{pesel}")
     fun getAtendee(@PathVariable pesel: String): Optional<Atendee> {
         return atendeeRepo.findByPesel(pesel)

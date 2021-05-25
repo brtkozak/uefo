@@ -29,8 +29,10 @@ class OrderService(
         var orderEntityId: Long? = null
         return try {
             val savedOrder = saveOrder(newOrderFormDataDto)
+            println("savedOrder")
             orderEntityId = savedOrder.id
             val paymentReq = preparePayment(savedOrder) ?: throw Exception("Cannot realize payment.")
+            println("paymentReq")
             NewOrderDto(savedOrder, paymentReq)
         } catch (e: Exception) {
             rollbackOrder(orderEntityId)
@@ -42,7 +44,7 @@ class OrderService(
         val orderEntity = Order(newOrderFormDataDto.userId, newOrderFormDataDto.matchId)
         orderRepository.save(orderEntity)
         val tickets = newOrderFormDataDto.tickets.map {
-            val ticketEntity = Ticket(it.atendee.id, it.seatId, orderEntity)
+            val ticketEntity = Ticket(it.atendee.pesel, it.seatId, orderEntity)
             ticketRepository.save(ticketEntity)
         }
         orderEntity.tickets = tickets.toMutableList()
@@ -63,13 +65,17 @@ class OrderService(
 
     fun preparePayment(savedOrder: Order): CreatePaymentResponse? {
         //TODO temp
-        val customerId = 123L
         val currency = "PL"
 
         val orderName = "Order_${savedOrder.id}"
         val tickets = getTicketsForPayment(savedOrder)
-        val infoForPayment = CreatePaymentRequest(orderName, savedOrder.id!!, customerId, currency, tickets)
-        return newOrderService.requestOrderPayment(infoForPayment)
+        val infoForPayment = CreatePaymentRequest(orderName, savedOrder.id!!, savedOrder.userId, currency, tickets)
+        return try {
+            newOrderService.requestOrderPayment(infoForPayment)
+        } catch (e: Exception) {
+            println("Cannot realize payment. Rollback order.")
+            null
+        }
     }
 
     fun getTicketsForPayment(savedOrder: Order): List<TicketForPaymentDto> {

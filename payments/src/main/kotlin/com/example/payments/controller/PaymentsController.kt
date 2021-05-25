@@ -42,6 +42,7 @@ class PaymentsController(
 
     @PostMapping("/payment")
     fun createPayment(@RequestBody createPaymentRequest: CreatePaymentRequest): Mono<ResponseEntity<CreatePaymentResponse>> {
+        println("@PostMapping createPayment")
         return try {
             paymentService.createPayment(createPaymentRequest).map {
                 if (it != null)
