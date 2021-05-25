@@ -13,9 +13,9 @@ class AtendeesController(private val atendeeRepo: AtendeeRepository) {
         return "atendees"
     }
 
-    @GetMapping("/{id}")
-    fun getAtendee(@PathVariable id: Long): Optional<Atendee> {
-        return atendeeRepo.findById(id)
+    @GetMapping("/byPesel/{pesel}")
+    fun getAtendee(@PathVariable pesel: String): Optional<Atendee> {
+        return atendeeRepo.findByPesel(pesel)
     }
 
     @PostMapping("/save")
@@ -26,10 +26,5 @@ class AtendeesController(private val atendeeRepo: AtendeeRepository) {
     @GetMapping("/all")
     fun getAll(): List<Atendee> {
         return atendeeRepo.findAll()
-    }
-
-    @DeleteMapping("/{id}")
-    fun deleteAtendee(@PathVariable id: Long) {
-        atendeeRepo.deleteById(id)
     }
 }

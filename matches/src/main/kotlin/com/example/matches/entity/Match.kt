@@ -1,6 +1,6 @@
 package com.example.matches.entity
 
-import java.util.*
+import java.time.LocalDate
 import javax.persistence.*
 
 @Entity
@@ -11,7 +11,7 @@ data class Match(
     var name: String,
     @OneToMany(mappedBy = "match")
     var allAvailableSeats: MutableList<SeatTicket>,
-    var beginDate: Date,
+    var beginDate: LocalDate,
     var durationTime: Int,
     @ManyToOne
     var teamOne: Team,
