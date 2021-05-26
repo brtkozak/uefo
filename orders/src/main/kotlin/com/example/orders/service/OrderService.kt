@@ -65,7 +65,7 @@ class OrderService(
 
     fun preparePayment(savedOrder: Order): CreatePaymentResponse? {
         //TODO temp
-        val currency = "PL"
+        val currency = "PLN"
 
         val orderName = "Order_${savedOrder.id}"
         val tickets = getTicketsForPayment(savedOrder)
