@@ -2,9 +2,11 @@ package com.example.orders
 
 import com.example.orders.dto.AvailableSeatsDto
 import com.example.orders.dto.NewOrderDto
+import com.example.orders.dto.NewOrderFormDataDto
 import com.example.orders.dto.OrderDetailsDto
 import com.example.orders.service.AvailableSeatsService
 import com.example.orders.service.OrderService
+import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
@@ -16,8 +18,10 @@ class OrdersController(
 ) {
 
     @PostMapping("/order")
-    fun createNewOrder(@RequestBody newOrderDto: NewOrderDto) : Order {
-        return orderService.createNewOrder(newOrderDto)
+    fun createNewOrder(@RequestBody newOrderFormDataDto: NewOrderFormDataDto) : ResponseEntity<NewOrderDto> {
+        val newOrder = orderService.createNewOrder(newOrderFormDataDto)
+            ?: return ResponseEntity.status(HttpStatus.BAD_REQUEST).build()
+        return ResponseEntity.ok(newOrder)
     }
 
     @GetMapping("/order/{orderId}")

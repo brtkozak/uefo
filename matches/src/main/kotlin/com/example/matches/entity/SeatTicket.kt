@@ -1,6 +1,8 @@
 package com.example.matches.entity
 
 import com.fasterxml.jackson.annotation.JsonIgnore
+import org.hibernate.annotations.OnDelete
+import org.hibernate.annotations.OnDeleteAction
 import javax.persistence.*
 
 @Entity
@@ -14,5 +16,6 @@ data class SeatTicket(
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name="match_fk")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     var match: Match
 )

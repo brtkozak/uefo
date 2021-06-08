@@ -1,6 +1,8 @@
 package com.example.matches.entity
 
-import java.util.*
+import org.hibernate.annotations.OnDelete
+import org.hibernate.annotations.OnDeleteAction
+import java.time.LocalDate
 import javax.persistence.*
 
 @Entity
@@ -11,10 +13,12 @@ data class Match(
     var name: String,
     @OneToMany(mappedBy = "match")
     var allAvailableSeats: MutableList<SeatTicket>,
-    var beginDate: Date,
+    var beginDate: LocalDate,
     var durationTime: Int,
     @ManyToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
     var teamOne: Team,
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @ManyToOne
     var teamTwo: Team,
 )

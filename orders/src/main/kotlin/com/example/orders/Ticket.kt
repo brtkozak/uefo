@@ -5,7 +5,7 @@ import javax.persistence.*
 
 @Entity
 class Ticket (
-    var atendeeId: Long,
+    var atendeePesel: String,
     var seatId: Long,
 
     @JsonIgnore
