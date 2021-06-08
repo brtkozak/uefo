@@ -49,3 +49,10 @@ services:
     depends_on:
       - gateway
       - database
+  notifications:
+    image: notifications:v1
+    container_name: notifications
+    ports:
+      - 8087:8087
+    depends_on:
+      - gateway

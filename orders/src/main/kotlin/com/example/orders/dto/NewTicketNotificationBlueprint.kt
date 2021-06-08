@@ -1,4 +1,4 @@
-package com.example.notifications.dto
+package com.example.orders.dto
 
 data class NewTicketNotificationBlueprint (
     val emailAddress: String,

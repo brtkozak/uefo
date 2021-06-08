@@ -16,7 +16,8 @@ import org.springframework.stereotype.Service
 @Service
 class OrderService(
     val newOrderService: NewOrderService,
-    val availableSeatsService: AvailableSeatsService,
+    val seatsService: SeatsService,
+    val notificationConnection: NotificationConnection,
     val ticketRepository: TicketRepository,
     val orderRepository: OrderRepository,
 ) {
@@ -26,6 +27,8 @@ class OrderService(
             throw IllegalArgumentException("Users with restrictions: " + restrictedAtendees.joinToString())
         }
 
+        checkIfSeatsAreNotOccupied(newOrderFormDataDto)
+
         var orderEntityId: Long? = null
         return try {
             val savedOrder = saveOrder(newOrderFormDataDto)
@@ -33,8 +36,13 @@ class OrderService(
             orderEntityId = savedOrder.id
             val paymentReq = preparePayment(savedOrder) ?: throw Exception("Cannot realize payment.")
             println("paymentReq")
+
+            notificationConnection.sendNewTicketNotification(savedOrder)
+            println("sendNewTicketNotification")
+
             NewOrderDto(savedOrder, paymentReq)
         } catch (e: Exception) {
+
             rollbackOrder(orderEntityId)
             throw e
         }
@@ -81,10 +89,28 @@ class OrderService(
 
     fun getTicketsForPayment(savedOrder: Order): List<TicketForPaymentDto> {
         return savedOrder.tickets
-            .mapNotNull { availableSeatsService.getSeatDetails(it.seatId) }
+            .mapNotNull { seatsService.getSeatDetails(it.seatId) }
             .map {
                 val ticketName = "ticket_" + it.id
                 TicketForPaymentDto(ticketName, it.seatPrice, 1, it.id)
             }
+    }
+
+    private fun checkIfSeatsAreNotOccupied(newOrderFormDataDto: NewOrderFormDataDto) {
+        println("checkIfSeatsAreNotOccupied - start")
+
+        val allFreeSeatsForMatch = seatsService.getAvailableSeatsForMatch(newOrderFormDataDto.matchId)?.seats
+            ?.map { it.id }
+            ?: throw Error("Match not found")
+        println("allFreeSeatsForMatch: " + allFreeSeatsForMatch.joinToString())
+
+        val notAvailableSeats = newOrderFormDataDto.tickets
+            .map { it.seatId }
+            .filter { !allFreeSeatsForMatch.contains(it) }
+        println("notAvailableSeats: " + notAvailableSeats.joinToString())
+
+        if(notAvailableSeats.isNotEmpty()) {
+            throw Error("Tickets not from match: " + notAvailableSeats.joinToString())
+        }
     }
 }

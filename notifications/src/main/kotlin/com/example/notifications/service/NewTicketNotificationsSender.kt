@@ -1,25 +1,34 @@
 package com.example.notifications.service
 
 import com.example.notifications.dto.NewTicketNotificationBlueprint
-import java.io.File
 
 class NewTicketNotificationsSender {
     companion object {
         val newTicketNotificationsCreator = NewTicketNotificationsCreator()
         val notificationEmailSender = NotificationEmailSender()
 
-        val SUBJECTS_REL_PATH = listOf("messages_templates", "new_ticket", "subjects")
-            .joinToString(File.separator)
+        val supportedLanguages = listOf("pl", "en")
+
+        const val SUBJECTS_REL_PATH = "/messages_templates/new_ticket/subjects/"
     }
 
     fun sendMessage(requestBodyObj: NewTicketNotificationBlueprint) {
+        if(!supportedLanguages.contains(requestBodyObj.language)) {
+            throw Error("Language not supported!")
+        }
+
         val emailMessage = newTicketNotificationsCreator.createNotificationMessage(requestBodyObj)
         val emailSubject = getSubject(requestBodyObj.language)
         notificationEmailSender.sendEmailNotification(emailMessage, emailSubject, requestBodyObj.emailAddress)
     }
 
     private fun getSubject(language: String): String {
-        val path = SUBJECTS_REL_PATH.plus(File.separatorChar).plus("$language-subject.txt")
-        return Thread.currentThread().getContextClassLoader().getResource(path).readText(Charsets.UTF_8)
+        val path = SUBJECTS_REL_PATH.plus("$language-subject.txt")
+        println("getSubject, path: $path")
+//        val resource = Thread.currentThread().contextClassLoader?.getResource(path)
+//            ?: javaClass.classLoader?.getResource(path)
+//            ?: ClassLoader.getSystemClassLoader().getResource(path)
+        val resource = {}.javaClass.getResource(path)
+        return resource.readText(Charsets.UTF_8)
     }
 }

@@ -12,7 +12,7 @@ import org.springframework.web.reactive.function.client.WebClient
 
 
 @Service
-class AvailableSeatsService(
+class SeatsService(
     private val orderRepository: OrderRepository
 ) {
     companion object {
@@ -28,8 +28,8 @@ class AvailableSeatsService(
         val match = getMatchById(matchId) ?: return null
         val ordersForMatch = orderRepository.getAllByMatchId(matchId)
         val availableSeats = match.allAvailableSeats.filter { availableSeatCandidate ->
-            ordersForMatch.any { order ->
-                order.tickets.any { ticket ->
+            ordersForMatch.all { order ->
+                order.tickets.none { ticket ->
                     ticket.seatId == availableSeatCandidate.id } }
         }
         return AvailableSeatsDto(matchId, availableSeats)

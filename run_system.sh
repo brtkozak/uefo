@@ -27,4 +27,9 @@ cd matches || exit
 docker build -f Dockerfile -t matches:v1 .
 cd ..
 
+cd notifications || exit
+./gradlew clean assemble -Dorg.gradle.java.home="$1"
+docker build -f Dockerfile -t notifications:v1 .
+cd ..
+
 docker-compose up
